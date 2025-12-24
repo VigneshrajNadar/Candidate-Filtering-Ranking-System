@@ -6,7 +6,7 @@ Features include **real-time filtering**, **resume parsing simulation**, **smart
 
 ---
 
-## � System Overview
+## 🎯 System Overview
 
 **RecruitAI** addresses the core challenge of modern recruitment: **Information Overload**. With hundreds of applicants for a single position, recruiters struggle to identify top talent efficiently.
 
@@ -26,7 +26,7 @@ This project delivers a **automated, intelligent ranking engine** that serves as
 
 ---
 
-## �📚 Table of Contents
+## 📚 Table of Contents
 1. [Software Architecture](#-software-architecture)
 2. [User Flow Journey](#-user-flow-journey)
 3. [Data Flow Diagrams](#-data-flow-diagrams)
@@ -43,7 +43,46 @@ This project delivers a **automated, intelligent ranking engine** that serves as
 
 High-level overview of the application's architecture, following a standard Client-Server model within the Next.js framework.
 
-![System Architecture](file:///C:/Users/vigne/.gemini/antigravity/brain/3b53ba1d-176f-427c-8507-65b77ae387f1/system_architecture_diagram_1766492709998.png)
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        Browser["🌐 Web Browser"]
+        UI["⚛️ React UI Components"]
+    end
+    
+    subgraph "Next.js Application"
+        Pages["📄 Pages/Routes"]
+        API["🔌 API Routes"]
+        State["💾 State Management"]
+    end
+    
+    subgraph "Business Logic"
+        Scorer["🧮 Scoring Engine"]
+        Filter["🔍 Filter Logic"]
+        Parser["📝 Data Parser"]
+    end
+    
+    subgraph "Data Layer"
+        MockDB[("📦 Mock Data\n(candidates.js)")]
+    end
+    
+    Browser --> UI
+    UI --> Pages
+    Pages --> State
+    Pages --> API
+    API --> Scorer
+    API --> Filter
+    API --> Parser
+    Scorer --> MockDB
+    Filter --> MockDB
+    Parser --> MockDB
+    
+    style Browser fill:#e1f5ff
+    style UI fill:#bbdefb
+    style API fill:#fff9c4
+    style Scorer fill:#c8e6c9
+    style MockDB fill:#f8bbd0
+```
 
 ---
 
@@ -51,7 +90,29 @@ High-level overview of the application's architecture, following a standard Clie
 
 The step-by-step journey of a recruiter using the application.
 
-![User Flow](file:///C:/Users/vigne/.gemini/antigravity/brain/3b53ba1d-176f-427c-8507-65b77ae387f1/user_flow_diagram_retry_1766492763968.png)
+```mermaid
+flowchart TD
+    Start(["👤 Recruiter Opens App"]) --> Input["📝 Enter Job Description\n(Title, Skills, Experience)"]
+    Input --> Optional["⚙️ Set Optional Filters\n(Location, Salary, Preferred Skills)"]
+    Optional --> Fetch["🚀 Click 'Rank Candidates'"]
+    Fetch --> API["📡 API Processes Request"]
+    API --> Score["🧮 Scoring Algorithm Runs"]
+    Score --> Sort["📊 Candidates Sorted by Score"]
+    Sort --> Display["✅ View Ranked List"]
+    Display --> Review{"🤔 Satisfied with Results?"}
+    Review -->|No| Refine["🔧 Adjust Filters"]
+    Refine --> Fetch
+    Review -->|Yes| Export["📥 Export/Contact Top Candidates"]
+    Export --> End(["✨ End"])
+    
+    style Start fill:#e8f5e9
+    style Input fill:#fff3e0
+    style Fetch fill:#e3f2fd
+    style Score fill:#f3e5f5
+    style Display fill:#e0f2f1
+    style Export fill:#fce4ec
+    style End fill:#e8f5e9
+```
 
 ---
 
@@ -171,10 +232,6 @@ Core endpoint that handles candidate scoring and ranking.
 
 ---
 
-
-
--
-
 ## 🧮 Scoring & Filtering Logic (Deep Dive)
 
 The system employs a **Two-Phase Ranking Process** to ensure quality matches.
@@ -207,7 +264,37 @@ Candidates who pass Phase 1 are assigned a dynamic score based on the following 
 4.  **Normalization**
     -   Final scores are normalized relative to the highest-scoring candidate to produce a `0-100%` match percentage.
 
-![Scoring Logic](file:///C:/Users/vigne/.gemini/antigravity/brain/3b53ba1d-176f-427c-8507-65b77ae387f1/scoring_logic_infographic_1766492732634.png)
+```mermaid
+graph LR
+    subgraph "Input"
+        C["👤 Candidate"]
+    end
+    
+    subgraph "Scoring Components"
+        RS["✅ Required Skills\n+25 pts each"]
+        PS["⭐ Preferred Skills\n+10 pts each"]
+        EXP["📅 Experience\n+3 pts/year\n(max 30)"]
+    end
+    
+    subgraph "Output"
+        Total["🎯 Total Score"]
+        Norm["📊 Normalized %"]
+    end
+    
+    C --> RS
+    C --> PS
+    C --> EXP
+    RS --> Total
+    PS --> Total
+    EXP --> Total
+    Total --> Norm
+    
+    style RS fill:#c8e6c9
+    style PS fill:#fff9c4
+    style EXP fill:#bbdefb
+    style Total fill:#f8bbd0
+    style Norm fill:#e1bee7
+```
 
 ---
 
@@ -274,7 +361,31 @@ gitGraph
 
 ## 🛠 Technology Stack
 
-![Tech Stack](file:///C:/Users/vigne/.gemini/antigravity/brain/3b53ba1d-176f-427c-8507-65b77ae387f1/tech_stack_mindmap_visual_1766492843005.png)
+```mermaid
+mindmap
+  root(("⚡ RecruitAI"))
+    Frontend
+      Next.js 15
+      React 19
+      Vanilla CSS
+      Responsive Design
+    Backend
+      Node.js
+      API Routes
+      Serverless Functions
+    Logic
+      Scoring Algorithm
+      Keyword Matching
+      Filter Engine
+    Data
+      Mock JSON
+      Future: PostgreSQL
+      Future: MongoDB
+    DevOps
+      Git/GitHub
+      Vercel Deployment
+      CI/CD Pipeline
+```
 
 ### Core Technologies
 -   **Frontend**: Next.js 15, React 19, Vanilla CSS (Custom Design System).
@@ -306,7 +417,7 @@ To further enhance RecruitAI, the following features are planned for future rele
 
 ---
 
-
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -354,9 +465,5 @@ const SCORES = {
 | **API Error 500** | Invalid JSON payload. | Check browser console network request. Ensure `jobDescription` object is valid. |
 | **Images not loading** | Local path issue. | Ensure images are in `public/assets` or correctly referenced in the `next.config.js`. |
 
----
 
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
