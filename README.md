@@ -77,8 +77,8 @@ graph LR
 graph TD
     Input[Job Input Form] -->|JD Object| State[Frontend State]
     FilterUI[Filter Component] -->|Filter Criteria| State
-    State -->|Payload| API[/api/rank-candidates]
-    API -->|JD & Filters| Parser[Request Parser]
+    State -->|Payload| API["/api/rank-candidates"]
+    API -->|JD & Filters| Parser["Request Parser"]
     Parser -->|Criteria| Matcher[Matching Engine]
     DB[Mock Data Source] -->|Profiles| Matcher
     Matcher -->|Scored Candidates| Sorter[Sorting Logic]
@@ -94,21 +94,21 @@ Visualizing the React Component tree structure.
 
 ```mermaid
 graph TD
-    Page[APP: page.js]
+    Page["APP: page.js"]
     Page --> Header[Header Section]
     Page --> LayoutGrid[Main Grid Layout]
     
-    LayoutGrid --> LeftCol[Left Column: Controls]
-    LayoutGrid --> RightCol[Right Column: Results]
+    LayoutGrid --> LeftCol["Left Column: Controls"]
+    LayoutGrid --> RightCol["Right Column: Results"]
     
-    LeftCol --> Card1[Card: Job Description]
+    LeftCol --> Card1["Card: Job Description"]
     Card1 --> JDInput[JobDescriptionInput.js]
     
-    LeftCol --> Card2[Card: Filters]
+    LeftCol --> Card2["Card: Filters"]
     Card2 --> FilterComp[Filters.js]
     
     RightCol --> List[CandidateList.js]
-    List --> CCard[CandidateCard.js (Internal)]
+    List --> CCard["CandidateCard.js (Internal)"]
     CCard --> Tags[Skill Tags]
     CCard --> Score[Score Badge]
 ```
@@ -356,24 +356,7 @@ const SCORES = {
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome!
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
-
 ## 📄 License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 📞 Contact
-
-Project Link: [https://github.com/your-username/candidate-ranking-system](https://github.com/your-username/candidate-ranking-system)
-
-
 
