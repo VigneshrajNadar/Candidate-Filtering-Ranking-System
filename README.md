@@ -465,5 +465,9 @@ const SCORES = {
 | **API Error 500** | Invalid JSON payload. | Check browser console network request. Ensure `jobDescription` object is valid. |
 | **Images not loading** | Local path issue. | Ensure images are in `public/assets` or correctly referenced in the `next.config.js`. |
 
+<<<<<<< HEAD
 
 
+=======
+---
+>>>>>>> eb471d1768cdee7629fa4e12825ef7af7f8e0436
